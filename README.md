@@ -29,9 +29,9 @@ Para rodar o projeto, basta executar:
     <li>Para executar no Android:
       <ul>
         <li> Inicie o AVD do android ou conecte seu dispositivo físico via USB </li>
-        <li> <code>$ adb reverse tcp:3333 tcp:3333</code> - Em outra aba do terminal para redirecionar a porta do servidor API para do dispositivo</li>
-        <li> <code>$ yarn start </code> - Em outra aba do terminal inicie o Metro Blunder </li>
-        <li> <code>$ yarn android </code> - Para iniciar o aplicativo no dispositivo </li>
+        <li> <code>$ adb reverse tcp:3333 tcp:3333</code> - Em outra aba do terminal, para redirecionar a porta do servidor API para do dispositivo</li>
+        <li> <code>$ yarn start </code> - Inicie o Metro Blunder </li>
+        <li> <code>$ yarn android </code> - Em outra aba do terminal, para iniciar o aplicativo no dispositivo </li>
       </ul>
     </li>
     <li>Para executar no Iphone:
