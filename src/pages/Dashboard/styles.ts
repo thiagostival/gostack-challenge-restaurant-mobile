@@ -76,6 +76,8 @@ export const FoodsContainer = styled.View`
 `;
 
 export const FoodList = styled.View`
+  display: flex;
+  flex-direction: column;
   flex: 1;
   padding: 0 20px;
   margin-top: 16px;
@@ -83,11 +85,13 @@ export const FoodList = styled.View`
 
 export const Food = styled.TouchableOpacity`
   display: flex;
+  flex: 1;
   flex-direction: row;
   align-items: center;
   background: #f0f0f5;
   border-radius: 8px;
   margin-bottom: 16px;
+  height: 120px;
 `;
 
 export const FoodImageContainer = styled.View`

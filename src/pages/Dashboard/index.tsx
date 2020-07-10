@@ -46,35 +46,63 @@ interface Category {
 const Dashboard: React.FC = () => {
   const [foods, setFoods] = useState<Food[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<
-    number | undefined
-  >();
+  const [selectedCategory, setSelectedCategory] = useState<number | undefined>(
+    undefined,
+  );
   const [searchValue, setSearchValue] = useState('');
 
-  const navigation = useNavigation();
+  const { navigate } = useNavigation();
 
   async function handleNavigate(id: number): Promise<void> {
-    // Navigate do ProductDetails page
+    navigate('FoodDetails', { id });
   }
 
   useEffect(() => {
-    async function loadFoods(): Promise<void> {
-      // Load Foods from API
+    try {
+      if (selectedCategory === undefined) {
+        api.get('/foods').then(response => {
+          const foodsFormatted = response.data.map((food: Food) => ({
+            ...food,
+            formattedPrice: formatValue(food.price),
+          }));
+          setFoods(foodsFormatted);
+        });
+      }
+      if (selectedCategory) {
+        api.get(`/foods?category_like=${selectedCategory}`).then(response => {
+          const foodsFormatted = response.data.map((food: Food) => ({
+            ...food,
+            formattedPrice: formatValue(food.price),
+          }));
+          setFoods(foodsFormatted);
+        });
+      }
+      if (searchValue) {
+        api.get(`/foods?q=${searchValue}`).then(response => {
+          const foodsFormatted = response.data.map((food: Food) => ({
+            ...food,
+            formattedPrice: formatValue(food.price),
+          }));
+          setFoods(foodsFormatted);
+        });
+      }
+    } catch (err) {
+      console.log(err);
     }
-
-    loadFoods();
   }, [selectedCategory, searchValue]);
 
   useEffect(() => {
-    async function loadCategories(): Promise<void> {
-      // Load categories from API
+    try {
+      api.get('/categories').then(response => {
+        setCategories(response.data);
+      });
+    } catch (err) {
+      console.log(err);
     }
-
-    loadCategories();
   }, []);
 
   function handleSelectCategory(id: number): void {
-    // Select / deselect category
+    setSelectedCategory(id === selectedCategory ? undefined : id);
   }
 
   return (
@@ -85,7 +113,7 @@ const Dashboard: React.FC = () => {
           name="log-out"
           size={24}
           color="#FFB84D"
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => navigate('Home')}
         />
       </Header>
       <FilterContainer>
