@@ -105,6 +105,7 @@ export const FoodImageContainer = styled.View`
 export const FoodContent = styled.View`
   flex: 1;
   padding: 16px;
+  flex-wrap: nowrap;
 `;
 
 export const FoodTitle = styled.Text`
@@ -114,6 +115,8 @@ export const FoodTitle = styled.Text`
   font-size: 15px;
   line-height: 22px;
   color: #3d3d4d;
+  flex: 1;
+  flex-wrap: nowrap;
 `;
 export const FoodDescription = styled.Text`
   font-family: 'Poppins-Regular';

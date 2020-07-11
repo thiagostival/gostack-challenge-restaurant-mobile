@@ -59,33 +59,21 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     try {
-      if (selectedCategory === undefined) {
-        api.get('/foods').then(response => {
-          const foodsFormatted = response.data.map((food: Food) => ({
+      api
+        .get<Food[]>('/foods', {
+          params: {
+            category_like: selectedCategory,
+            name_like: searchValue,
+          },
+        })
+        .then(response => {
+          const data = response.data.map(food => ({
             ...food,
             formattedPrice: formatValue(food.price),
           }));
-          setFoods(foodsFormatted);
+
+          setFoods(data);
         });
-      }
-      if (selectedCategory) {
-        api.get(`/foods?category_like=${selectedCategory}`).then(response => {
-          const foodsFormatted = response.data.map((food: Food) => ({
-            ...food,
-            formattedPrice: formatValue(food.price),
-          }));
-          setFoods(foodsFormatted);
-        });
-      }
-      if (searchValue) {
-        api.get(`/foods?q=${searchValue}`).then(response => {
-          const foodsFormatted = response.data.map((food: Food) => ({
-            ...food,
-            formattedPrice: formatValue(food.price),
-          }));
-          setFoods(foodsFormatted);
-        });
-      }
     } catch (err) {
       console.log(err);
     }
